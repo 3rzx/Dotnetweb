@@ -1,0 +1,15 @@
+version: "3"
+services:
+  dotnetweb:
+    image: "dotnetweb:latest"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dotnetweb
+    ports:
+      - 8080:80
+
+networks:
+  default:
+    external:
+      name: nat
