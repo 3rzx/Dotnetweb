@@ -16,9 +16,14 @@ namespace DotnetWeb
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            //Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -36,10 +41,10 @@ namespace DotnetWeb
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<DotnetWebContent>(options => 
+            services.AddEntityFrameworkNpgsql().AddDbContext<DotnetWebContext>(options => 
                 options.UseNpgsql(
-                    Configuration.GetConnectionString("Server=localhost;Port=5433;Database=postgres;User Id=postgres;Password=1qaz2wsx!"
-                )));
+                    Configuration.GetConnectionString("DefaultConnection")
+            ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +56,7 @@ namespace DotnetWeb
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -63,8 +68,12 @@ namespace DotnetWeb
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "Memes", 
+                    template: "{controller=Memes}/{action=GetOK}");
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                
             });
         }
     }

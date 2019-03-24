@@ -5,10 +5,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: dotnetweb
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=LinuxContainer
     ports:
       - 8000:80
     networks:
       - netcore-dev
+    links:
+     - postgres
     depends_on:
       - postgres
       - redis

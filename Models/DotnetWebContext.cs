@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DotnetWeb.Models
 {
-    public class DotnetWebContent : DbContext
+    public class DotnetWebContext : DbContext
     {
-        public DotnetWebContent(DbContextOptions<DotnetWebContent> options)
+        public DotnetWebContext(DbContextOptions<DotnetWebContext> options)
             : base(options)
         {
         }
 
-        public DbSet<ServiceMapping> ServiceMappings { get; set; }
+        public DbSet<Memes> Memes { get; set; }
     }
 }
