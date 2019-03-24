@@ -1,10 +1,9 @@
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /app
-
 COPY . ./
-
+#RUN dotnet build
 #RUN dotnet test ./Tests/Tests.csproj
-
+#RUN dotnet ef database update --environment LinuxContainer
 RUN dotnet publish -c Release -o publish
 
 # Build runtime image
