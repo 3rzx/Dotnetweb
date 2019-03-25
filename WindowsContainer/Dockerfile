@@ -1,8 +1,9 @@
 FROM microsoft/dotnet:2.2-sdk-nanoserver-sac2016 AS publish
 WORKDIR /app
 COPY . ./
+#RUN dotnet build
+#RUN dotnet test ./Tests/Tests.csproj	
 RUN dotnet publish -c Release -o /publish
-
 
 FROM microsoft/iis AS runner
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'Continue'; $verbosePreference='Continue';"]
