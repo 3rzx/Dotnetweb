@@ -10,6 +10,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=LinuxContainer
     ports:
       - 8000:80
+    volumes:
+      - path/to/Logs:/app/logs
     networks:
       - netcore-dev
     links:
