@@ -1,5 +1,18 @@
 version: "3"
 services:
+  nginx:
+    image: "nginx"
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    links:
+      - dotnetweb
+    ports:
+      - "8085:80" 
+    networks:
+      - netcore-dev
+
   dotnetweb:
     image: "dotnetweb:latest"
     build:
@@ -8,8 +21,6 @@ services:
     container_name: dotnetweb
     environment: 
       - ASPNETCORE_ENVIRONMENT=LinuxContainer
-    ports:
-      - 8000:80
     volumes:
       - path/to/Logs:/app/logs
     networks:

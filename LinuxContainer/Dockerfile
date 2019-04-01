@@ -25,6 +25,9 @@ FROM microsoft/dotnet:2.2-aspnetcore-runtime AS runtime
 WORKDIR /app
 COPY --from=build /app/publish ./
 
+ENV ASPNETCORE_URLS http://+:5000
+EXPOSE 5000
+
 VOLUME /app/logs
 
 ENTRYPOINT ["dotnet", "DotnetWeb.dll"]
